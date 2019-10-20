@@ -27,10 +27,11 @@ const int ledPin =  LED_BUILTIN;
 const int outPIN = 9;
 const int interruptPIN = 0;
 const long intervalMs = 2000;
+const unsigned long longMax = 4294967295;
 //Variables
 int state = LOW;
 unsigned long prevMs = 0;
-
+unsigned long timeValue = 0;
 // the setup function runs once when you press reset or power the board
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
@@ -43,15 +44,15 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
+  //When millis () turns 0 after 50 days, the remaining interval is 4294967295-previousMillis+millis()
+  if (millis() >= prevMs)
+    timeValue = millis()-prevMs;
+  else
+    timeValue = longMax - prevMs + millis();
 
   if(millis()-prevMs >= intervalMs){
     prevMs = millis();
-
-    if(state == LOW ){
-      state = HIGH; 
-    }else {
-      state = LOW;  
-    }
+    state = !state;
     digitalWrite(outPIN, state);
   }
 }
