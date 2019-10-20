@@ -28,10 +28,12 @@ const int outPIN = 9;
 const int interruptPIN = 0;
 const long intervalMs = 2000;
 const unsigned long longMax = 4294967295;
+
 //Variables
 int state = LOW;
 unsigned long prevMs = 0;
 unsigned long timeValue = 0;
+
 // the setup function runs once when you press reset or power the board
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
