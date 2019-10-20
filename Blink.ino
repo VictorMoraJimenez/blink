@@ -24,15 +24,21 @@
 
 //Constants 
 const int ledPin =  LED_BUILTIN;
+const int outPIN = 9;
+const int interruptPIN = 0;
 const long intervalMs = 2000;
 //Variables
-int ledState = LOW;
-unsigned long prevMs;
+int state = LOW;
+unsigned long prevMs = 0;
 
 // the setup function runs once when you press reset or power the board
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
   pinMode(ledPin, OUTPUT);
+  pinMode(outPIN, OUTPUT);
+  pinMode(interruptPIN, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(interruptPIN),interruptBlink, CHANGE);
+
 }
 
 // the loop function runs over and over again forever
@@ -41,12 +47,16 @@ void loop() {
   if(millis()-prevMs >= intervalMs){
     prevMs = millis();
 
-    if(ledState == LOW ){
-      ledState = HIGH; 
+    if(state == LOW ){
+      state = HIGH; 
     }else {
-      ledState = LOW;  
+      state = LOW;  
     }
-    digitalWrite(ledPin, ledState);
+    digitalWrite(outPIN, state);
   }
 }
 
+// interruption function
+void interruptBlink(){
+   digitalWrite(ledPin, state);
+}

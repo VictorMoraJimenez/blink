@@ -2,5 +2,7 @@
     "programmer": "AVRISP mkII",
     "board": "arduino:samd:mkr1000",
     "port": "COM16",
-    "sketch": "Blink.ino"
+    "sketch": "Blink.ino",
+    "output": "../build",
+    "debugger": "jlink"
 }
