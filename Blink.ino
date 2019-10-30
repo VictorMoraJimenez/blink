@@ -18,6 +18,7 @@ unsigned long timeValue = 0;
 // the setup function runs once when you press reset or power the board
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
+  Serial.begin(9600);
   pinMode(ledPin, OUTPUT);
   pinMode(outPIN, OUTPUT);
   pinMode(interruptPIN, INPUT_PULLUP);
@@ -33,7 +34,7 @@ void loop() {
   else
     timeValue = longMax - prevMs + millis();
 
-  if(millis()-prevMs >= intervalMs){
+  if(timeValue >= intervalMs){
     prevMs = millis();
     state = !state;
     digitalWrite(outPIN, state);
@@ -42,5 +43,12 @@ void loop() {
 
 // interruption function
 void interruptBlink(){
-   digitalWrite(ledPin, state);
+  digitalWrite(ledPin, state);
+
+  //Print time and state to monitor the led state
+  Serial.print(millis()/1000);
+  if(state) 
+    Serial.println("s -> LED ON");
+  else
+    Serial.println("s -> LED OFF"); 
 }
